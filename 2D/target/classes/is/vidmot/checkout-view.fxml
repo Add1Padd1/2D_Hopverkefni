@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="is.vidmot.CheckoutController"
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@css/player.css">
+    <children>
+        <Button fx:id="fxForsidaButton" text="Forsíða" onAction="#onForsida"
+                styleClass="back-button" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+
+        <VBox spacing="20" alignment="CENTER" prefWidth="600.0" layoutX="0.0" layoutY="50.0">
+            <Label text="Karfa" styleClass="karfa-label"/>
+            <GridPane hgap="20" vgap="10" alignment="CENTER">
+                <Label text="Name of Tour:" styleClass="checkout-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                <Label fx:id="fxNameOfTour" text="Tour Name Value" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                <Label text="Date of Tour:" styleClass="checkout-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <Label fx:id="fxDateOfTour" text="Date Value" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Label text="Number of Tickets:" styleClass="checkout-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <Label fx:id="fxNumTickets" text="Number of Tickets Value" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                <Label text="Total Cost:" styleClass="checkout-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <Label fx:id="fxTotalCost" text="Total Cost Value" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+            </GridPane>
+
+            <VBox spacing="15" alignment="CENTER">
+                <TextField fx:id="fxNameField" promptText="Skrifaðu fullt nafn" prefWidth="200" maxWidth="200"/>
+                <TextField fx:id="fxEmailField" promptText="Settu inn netfangið þitt (Email)" prefWidth="200" maxWidth="200"/>
+            </VBox>
+
+            <Button fx:id="fxCompleteButton" text="Ljúka kaupum" onAction="#onCompletePurchase" styleClass="complete-button" />
+        </VBox>
+    </children>
+</AnchorPane>

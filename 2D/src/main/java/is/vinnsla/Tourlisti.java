@@ -4,50 +4,72 @@ import is.repository.DatabaseMock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Tourlisti {
-    // listi af öllum tours
-    protected static ObservableList<Tour> tours = FXCollections.observableArrayList();
+    protected static ObservableList<Tour> allTours = FXCollections.observableArrayList();
 
-    // núverandi tour
-    private static int index = 0;
+    private ObservableList<Tour> filteredTours = FXCollections.observableArrayList();
 
-    /**
-     * Bua til tour
-     */
-    public static void buaTilTours() {
-        tours.clear();
-        DatabaseMock.generateTours(tours);
+
+
+    public void buaTilTours() {
+        DatabaseMock.generateTours(allTours);
+        filteredTours.setAll(allTours);
     }
-    /**
-     * Finds and returns a Tour by its name.
-     *
-     * @param tourName The name of the tour to find.
-     * @return The Tour object if found, otherwise null.
-     */
+
+
     public static Tour chooseTour(String tourName) {
-        for (Tour tour : tours) {
+        for (Tour tour : allTours) {
             if (tour.getName().equalsIgnoreCase(tourName)) {
                 return tour;
             }
         }
-        return null; // Return null if no matching tour is found
+        return null;
     }
 
 
-    // get og set aðferðir
-
-    public ObservableList<Tour> getListi() {
-        return tours;
+    public ObservableList<Tour> getListiTilSynis() {
+        return filteredTours;
     }
 
-    public static void setIndex(int selectedIndex) {
-        index = selectedIndex;
+
+    public ObservableList<Tour> getAllToursListi() {
+        return allTours;
     }
 
-    public int getIndex() {
-        return index;
+
+
+    public void filterTours(String location, LocalDate date, Integer minDuration, Double maxPrice ) {
+
+        List<Tour> result = allTours.stream()
+                .filter(tour -> {
+                    // Staðsetningar filter
+                    boolean locationMatch = (location == null || location.trim().isEmpty() ||
+                            tour.getLocation().toLowerCase().contains(location.trim().toLowerCase()));
+                    return locationMatch;
+                })
+                .filter(tour -> {
+                    // Dagsetningar filter
+                    boolean dateMatch = (date == null || tour.getDate().equals(date));
+                    return dateMatch;
+                })
+                .filter(tour -> minDuration == null || tour.getDuration() >= (minDuration * 60)) // Ef duration er í min
+                .filter(tour -> maxPrice == null || tour.getTicketPrice() <= maxPrice)
+                .collect(Collectors.toList());
+
+        filteredTours.setAll(result);
+        System.out.println("Filtering applied. Showing " + filteredTours.size() + " tours.");
     }
-    public static Tour getTourFromList(){
-        return tours.get(index);
+
+    /**
+     * Hreinsar filterinn og sýnir allar ferðir aftur.
+     */
+    public void clearFilter() {
+        filteredTours.setAll(allTours);
+        System.out.println("Filter cleared. Showing all " + filteredTours.size() + " tours.");
     }
+
 }

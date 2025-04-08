@@ -4,104 +4,172 @@ import is.vinnsla.Tour;
 import is.vinnsla.Tourlisti;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Insets;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ScrollPane;
+
+import java.time.LocalDate;
 
 public class HomeController  {
-
 
     private Tourlisti tourlisti = new Tourlisti();
 
     @FXML
     private GridPane fxGrid;
+    @FXML
+    private ScrollPane fxScrollPane;
+    @FXML
+    private TextField fxLocationFilter;
+    @FXML
+    private DatePicker fxDateFilter;
+    @FXML
+    private Button fxSearchButton;
+    @FXML
+    private Button fxClearFilterButton;
+
+    @FXML
+    private TextField fxMinDurationFilter;
+    @FXML
+    private TextField fxMaxPriceFilter;
 
 
     @FXML
     public void initialize() {
-        tourlisti.buaTilTours(); // Populate the tours list
-        populateGrid();
+        tourlisti.buaTilTours();
+        populateGrid(tourlisti.getListiTilSynis());
+        fxSearchButton.setOnAction(event -> applyFilter());
+        fxClearFilterButton.setOnAction(event -> clearFilter());
+
+        tourlisti.getListiTilSynis().addListener((ListChangeListener<Tour>) c -> {
+            System.out.println("List changed, repopulating grid...");
+            populateGrid(tourlisti.getListiTilSynis());
+        });
+
+        fxLocationFilter.setOnAction(event -> applyFilter());
+        fxMinDurationFilter.setOnAction(event -> applyFilter());
+        fxMaxPriceFilter.setOnAction(event -> applyFilter());
     }
 
-    private void populateGrid() {
+    private void populateGrid(ObservableList<Tour> toursToDisplay) {
         int row = 0;
         int col = 0;
 
-        // Clear the GridPane to avoid duplicates
         fxGrid.getChildren().clear();
-        for (Tour tour : tourlisti.getListi()) {
-            // Create a VBox for each tour
-            VBox tourBox = new VBox(10); // Add spacing between elements
-            tourBox.setAlignment(javafx.geometry.Pos.CENTER);
 
-            // Add an ImageView
+        if (toursToDisplay.isEmpty()) {
+            fxGrid.add(new Label("Engar ferðir fundust með þessum skilyrðum."), 0, 0, 2, 1); // Span across 2 columns
+            return; // heldur ekki áfram ef listinn er tómur
+        }
+
+
+        for (Tour tour : toursToDisplay) {
+            VBox tourBox = new VBox(10);
+            tourBox.setAlignment(javafx.geometry.Pos.CENTER);
             ImageView imageView = new ImageView();
             try {
-                // Load the image from the Tour object
-                imageView.setImage(new Image(getClass().getResourceAsStream("/is/vidmot/media/" + tour.getPicture())));
+                String imagePath = "/is/vidmot/media/" + tour.getPicture();
+                Image img = new Image(getClass().getResourceAsStream(imagePath));
+                if (img.isError()) {
+                    System.err.println("Error loading image: " + imagePath + " - " + img.getException());
+                    throw new NullPointerException("Image loading error");
+                }
+                imageView.setImage(img);
+
             } catch (Exception e) {
-                System.err.println("Error loading image for tour: " + tour.getName() + " - " + e.getMessage());
-                // Use a placeholder image if the image cannot be loaded
-                imageView.setImage(new Image(getClass().getResourceAsStream("/is/vidmot/media/placeholder.jpg")));
+                System.err.println("Using placeholder for tour: " + tour.getName() + ". Error: " + e.getMessage());
+                try {
+                    imageView.setImage(new Image(getClass().getResourceAsStream("/is/vidmot/media/placeholder.jpg")));
+                } catch (Exception placeholderEx) {
+                    System.err.println("FATAL: Could not load placeholder image!");
+                }
             }
+
             imageView.setFitHeight(60);
             imageView.setFitWidth(80);
-
-            // Add a Label for the name
             Label nameLabel = new Label(tour.getName());
             nameLabel.getStyleClass().add("tour-name");
-
-            // Add a Label for the description
             Label descriptionLabel = new Label(tour.getDescription());
             descriptionLabel.getStyleClass().add("tour-description");
             descriptionLabel.setWrapText(true);
-
-            // Add a Button below the tour
             Button selectButton = new Button("Select Tour");
             selectButton.setOnAction(event -> {
-                // Get the selected Tour from the button's userData
-                ViewSwitcher.switchTo(View.LISTI, false);
-                Tour selectedTour = (Tour) selectButton.getUserData();
-                String selectedTourName = selectedTour.getName();
-                Tour tourFromList = Tourlisti.chooseTour(selectedTourName);
-                if (tourFromList != null) {
-                    selectedTour = tourFromList;
-                } else {
-                    System.out.println("Tour not found in the list.");
-                }
+                Tour buttonTourData = (Tour) selectButton.getUserData();
+                Tour selectedTour = Tourlisti.chooseTour(buttonTourData.getName());
 
-                System.out.println("Selected Tour: " + selectedTour.getName());
                 if (selectedTour != null) {
-                    // Pass the selected Tour to ListiController
+                    System.out.println("Selected Tour: " + selectedTour.getName());
                     TourController.setSelectedTour(selectedTour);
-                    System.out.println("Tour selected: " + selectedTour);
-                    // Switch to the tour-view.fxml
                     ViewSwitcher.switchTo(View.LISTI, false);
                 } else {
-                    System.out.println("No tour selected.");
+                    System.out.println("Error: Could not find selected tour in master list.");
                 }
-
             });
-
-            selectButton.setUserData(tour); // Store the corresponding Tour in the button's userData
-
-            // Add components to the VBox
+            selectButton.setUserData(tour);
             tourBox.getChildren().addAll(imageView, nameLabel, descriptionLabel, selectButton);
-
-            VBox.setMargin(tourBox, new Insets(10, 10, 10, 10)); // Add margins around each VBox
-
-            // Add the VBox to the GridPane
+            VBox.setMargin(tourBox, new Insets(10, 10, 10, 10));
             fxGrid.add(tourBox, col, row);
-
-            // Update column and row for the next tour
             col++;
-            if (col > 1) { // Assuming 2 columns
+            if (col >= fxGrid.getColumnConstraints().size()) { // Gera þetta dynamic miðað við fjölda dálka
                 col = 0;
                 row++;
             }
         }
+    }
+
+    private void applyFilter() {
+        String locationFilterText = fxLocationFilter.getText();
+        LocalDate dateFilterValue = fxDateFilter.getValue();
+
+        Integer minDurationValue = null;
+        try {
+            String durationText = fxMinDurationFilter.getText();
+            if (durationText != null && !durationText.trim().isEmpty()) {
+                minDurationValue = Integer.parseInt(durationText.trim());
+                if (minDurationValue < 0) minDurationValue = null; // Ekki leyfa neikvæða tölu
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input for Min Duration: " + fxMinDurationFilter.getText() + ". Ignoring duration filter.");
+            // minDurationValue helst null
+        }
+
+        Double maxPriceValue = null; // Byrja sem null
+        try {
+            String priceText = fxMaxPriceFilter.getText();
+            if (priceText != null && !priceText.trim().isEmpty()) {
+                maxPriceValue = Double.parseDouble(priceText.trim());
+                if (maxPriceValue < 0) maxPriceValue = null; // Ekki leyfa neikvætt verð
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid input for Max Price: " + fxMaxPriceFilter.getText() + ". Ignoring price filter.");
+            // maxPriceValue helst null
+        }
+
+        System.out.println("Applying filter - Location: " + locationFilterText +
+                ", Date: " + dateFilterValue +
+                ", Min Duration: " + minDurationValue + " hrs" +
+                ", Max Price: " + maxPriceValue + " ISK");
+
+        // Kalla í filter aðferðina með ÖLLUM gildunum (eða null)
+        tourlisti.filterTours(locationFilterText, dateFilterValue, minDurationValue, maxPriceValue);
+
+    }
+
+    private void clearFilter() {
+        fxLocationFilter.clear();
+        fxDateFilter.setValue(null);
+        fxMinDurationFilter.clear();
+        fxMaxPriceFilter.clear();
+
+        System.out.println("Clearing filter...");
+        tourlisti.clearFilter();
+
     }
 }

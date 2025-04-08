@@ -9,12 +9,14 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
     </padding>
 
-
+    <!-- Filter Controls Section -->
     <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Filter Tours:"/>
         <TextField fx:id="fxLocationFilter" promptText="Location" prefWidth="120"/>
         <DatePicker fx:id="fxDateFilter" promptText="Date" prefWidth="120"/>
+        <!-- NÝTT: Reitur fyrir lágmarkslengd -->
         <TextField fx:id="fxMinDurationFilter" promptText="Min Duration (hrs)" prefWidth="110"/>
+        <!-- NÝTT: Reitur fyrir hámarksverð -->
         <TextField fx:id="fxMaxPriceFilter" promptText="Max Price (ISK)" prefWidth="100"/>
         <Button fx:id="fxSearchButton" text="Search"/>
         <Button fx:id="fxClearFilterButton" text="Clear"/>
@@ -23,6 +25,7 @@
         </padding>
     </HBox>
 
+    <!-- Grid for displaying tours -->
     <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
         <GridPane fx:id="fxGrid" hgap="20.0" vgap="20.0">
             <padding>
@@ -32,6 +35,7 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
             </columnConstraints>
+            <!-- RowConstraints verða búnar til dynamically af kóða -->
         </GridPane>
     </ScrollPane>
 
