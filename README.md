@@ -2,6 +2,7 @@
 
 ## Höfundar:
 Arnaldur Ólafsson - Add1Padd1 - aro42@hi.is
+Aron Bjartur Hilmarsson - aronbjartur - abh41@hi.is
 ## Lýsing:
 * Þarf að keyra verkefnið í IntelliJ með JavaFX
 * Hafið Project Settings það sama og hjá verkefni sem virka hjá ykkur
