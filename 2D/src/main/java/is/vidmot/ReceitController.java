@@ -3,7 +3,6 @@ package is.vidmot;
 import is.vinnsla.Receit;
 import is.vinnsla.ReceitData;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class ReceitController {

@@ -34,7 +34,10 @@
                 <Label text="Ticket Price:" styleClass="tour-label" GridPane.rowIndex="5" GridPane.columnIndex="0" />
                 <Label fx:id="fxTicketPrice" text="Ticket Price Value" GridPane.rowIndex="5" GridPane.columnIndex="1" />
             </GridPane>
-
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Tickets left: " styleClass="tour-label-red"/>
+                <Label fx:id="fxTicketsLeft" text="Tickets left"/>
+            </HBox>
             <HBox spacing="10" alignment="CENTER">
                 <Spinner fx:id="fxTicketSpinner" min="1" max="10" initialValue="1" />
                 <Button text="Kaupa miða" onAction="#onBuy" styleClass="buy-button" />

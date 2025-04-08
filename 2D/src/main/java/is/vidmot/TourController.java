@@ -4,7 +4,6 @@ import is.vinnsla.CheckoutData;
 import is.vinnsla.Tour;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,8 +15,6 @@ public class TourController  {
     @FXML
     private Spinner<Integer> fxTicketSpinner;
 
-    @FXML
-    private ListView<Tour> fxListView;
 
     @FXML
     private ImageView fxImage;
@@ -40,6 +37,8 @@ public class TourController  {
     private Label fxStartTime;
     @FXML
     private Label fxTicketPrice;
+    @FXML
+    private Label fxTicketsLeft;
 
 
     private static Tour selectedTour;
@@ -78,6 +77,7 @@ public class TourController  {
         fxDate.setText(tour.getDate().toString());
         fxStartTime.setText(tour.getStartTime().toString());
         fxTicketPrice.setText(tour.getTicketPrice() + " kr.");
+        fxTicketsLeft.setText(String.valueOf(tour.getNumTickets()));
     }
 
 
@@ -85,7 +85,7 @@ public class TourController  {
 
 
     /**
-     * Fara aftur í heima view. Ef spilari er til stöðva spilarann
+     * Fara aftur í heima view.
      *
      * @param actionEvent ónotað
      */

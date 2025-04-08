@@ -16,8 +16,9 @@ public class Tour {
     private LocalTime startTime; // New field for start time
     private Image image;
     private Integer ticketPrice;
+    private int numTickets;
 
-    public Tour(String name, int duration, String picture, String location, String description, LocalDate date, LocalTime startTime, Integer ticketPrice) {
+    public Tour(String name, int duration, String picture, String location, String description, LocalDate date, LocalTime startTime, Integer ticketPrice, int numTickets) {
         this.name = name;
         this.duration = duration;
         this.picture = picture;
@@ -26,6 +27,7 @@ public class Tour {
         this.date = date;
         this.startTime = startTime; // Initialize start time
         this.ticketPrice = ticketPrice;
+        this.numTickets = numTickets;
         // Attempt to load the image
     try {
         String imagePath = "/is/vidmot/media/" + picture;
@@ -56,6 +58,7 @@ public class Tour {
         this.date = tour.getDate();
         this.startTime = tour.getStartTime(); // Set start time
         this.ticketPrice = tour.getTicketPrice();
+        this.numTickets = tour.getNumTickets();
         return this;
     }
 
@@ -98,5 +101,12 @@ public class Tour {
 
     public void setStartTime(LocalTime startTime) { // Setter for start time
         this.startTime = startTime;
+    }
+
+    public int getNumTickets() {
+        return numTickets;
+    }
+    public void setNumTickets(int numTickets) {
+        this.numTickets = numTickets;
     }
 }

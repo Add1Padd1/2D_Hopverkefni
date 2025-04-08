@@ -77,6 +77,10 @@
 .tour-label {
   -fx-font-weight: bold;
 }
+.tour-label-red {
+  -fx-font-weight: bold;
+  -fx-text-fill: red;
+}
 .karfa-label {
   -fx-font-size: 20px;
   -fx-font-weight: bold;

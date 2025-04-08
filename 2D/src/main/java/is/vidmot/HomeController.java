@@ -13,15 +13,11 @@ import javafx.geometry.Insets;
 
 public class HomeController  {
 
-    // fastar
-    public static final String ASKRIFANDI = "Áskrifandi";
+
     private Tourlisti tourlisti = new Tourlisti();
 
-    // viðmótshlutir
     @FXML
     private GridPane fxGrid;
-    @FXML
-    protected Button fxAskrifandi;
 
 
     @FXML
@@ -44,7 +40,7 @@ public class HomeController  {
             // Add an ImageView
             ImageView imageView = new ImageView();
             try {
-                // Load the image dynamically from the Tour object
+                // Load the image from the Tour object
                 imageView.setImage(new Image(getClass().getResourceAsStream("/is/vidmot/media/" + tour.getPicture())));
             } catch (Exception e) {
                 System.err.println("Error loading image for tour: " + tour.getName() + " - " + e.getMessage());
@@ -90,7 +86,6 @@ public class HomeController  {
 
             });
 
-
             selectButton.setUserData(tour); // Store the corresponding Tour in the button's userData
 
             // Add components to the VBox
@@ -109,11 +104,4 @@ public class HomeController  {
             }
         }
     }
-
-
-
-
-
-
-
 }
