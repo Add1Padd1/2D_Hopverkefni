@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="is.vidmot.ReceitController"
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@css/player.css">
+    <children>
+        <VBox spacing="20" alignment="CENTER" layoutX="50.0" layoutY="20.0" prefWidth="500.0">
+
+            <Label text="Kvittun" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+
+            <GridPane hgap="20" vgap="10">
+                <Label text="Tour Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxTourName" text="Tour Name Value" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                <Label text="Duration:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxDuration" text="Duration Value" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Label text="Location:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxLocation" text="Location Value" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                <Label text="Description:" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxDescription" text="Description Value" wrapText="true" prefWidth="300.0" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                <Label text="Date:" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxDate" text="Date Value" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                <Label text="Start Time:" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxStartTime" text="Start Time Value" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+                <Label text="Ticket Price:" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxTicketPrice" text="Ticket Price Value" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+
+                <Label text="Username:" GridPane.rowIndex="7" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxUsername" text="Username Value" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+                <Label text="Email:" GridPane.rowIndex="8" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxEmail" text="Email Value" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+
+
+                <Label text="Number of Tickets:" GridPane.rowIndex="9" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxNumTickets" text="Number of Tickets Value" GridPane.rowIndex="9" GridPane.columnIndex="1" />
+
+                <Label text="Total Cost:" GridPane.rowIndex="10" GridPane.columnIndex="0" styleClass="receit-label"/>
+                <Label fx:id="fxTotalCost" text="Total Cost Value" GridPane.rowIndex="10" GridPane.columnIndex="1" />
+            </GridPane>
+            <Button fx:id="fxBackButton" text="Aftur á forsíðu" onAction="#onBack" styleClass="back-button" />
+        </VBox>
+    </children>
+</AnchorPane>

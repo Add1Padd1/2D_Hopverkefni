@@ -1,0 +1,84 @@
+.image-button {
+  -fx-background-color: transparent;
+}
+.grid-pane {
+  -fx-padding: 20;
+  -fx-hgap: 20;
+  -fx-vgap: 20;
+}
+
+/* Add spacing within each VBox */
+.tour-box {
+  -fx-spacing: 10;
+  -fx-alignment: center;
+  -fx-padding: 10;
+  -fx-border-color: lightgray;
+  -fx-border-width: 1;
+  -fx-border-radius: 5;
+  -fx-background-color: #f9f9f9;
+}
+/* Style for the tour name */
+.tour-name {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #333;
+}
+
+/* Style for the tour location */
+.tour-location {
+  -fx-font-size: 16px;
+  -fx-text-fill: #555;
+}
+
+/* Style for the tour description */
+.tour-description {
+  -fx-font-size: 14px;
+  -fx-text-fill: #666;
+}
+
+/* Style for the tour date */
+.tour-date {
+  -fx-font-size: 14px;
+  -fx-text-fill: #444;
+}
+
+/* Style for the tour start time */
+.tour-start-time {
+  -fx-font-size: 14px;
+  -fx-text-fill: #444;
+}
+
+/* Style for the back button */
+.back-button {
+  -fx-background-color: #0078d7;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-padding: 5px 10px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+.checkout-label {
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+}
+
+/* Style for the complete purchase button */
+.complete-button {
+  -fx-background-color: #0078d7;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-padding: 10px 20px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+.receit-label {
+  -fx-font-weight: bold;
+}
+.tour-label {
+  -fx-font-weight: bold;
+}
+.karfa-label {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #333;
+}
