@@ -12,3 +12,8 @@ Aron Bjartur Hilmarsson - aronbjartur - abh41@hi.is
 * Þá ætti verkefnið að virka en endilega láta vita ef svo er ekki
 
 
+## Eldri útgáfa 
+
+Hér er eldri útgáfa af þessu repo með virkni sem var kominn langleiðina en náðum ekki að útfæra rétt fyrir clusterinn eða javafx
+
+https://github.com/aronbjartur/2D
